@@ -10,14 +10,14 @@ export async function scrapeMaps(query) {
   await page.goto("https://www.google.com/maps", { waitUntil: "domcontentloaded" });
 
   await page.waitForTimeout(3000);
-  await page.fill('input#searchboxinput', query);
+  await page.fill("#searchboxinput", query);
   await page.keyboard.press("Enter");
 
-  await page.waitForTimeout(5000);
+  await page.waitForTimeout(6000);
 
   const results = [];
 
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 8; i++) {
     await page.mouse.wheel(0, 3000);
     await page.waitForTimeout(2000);
   }
@@ -29,9 +29,9 @@ export async function scrapeMaps(query) {
       await card.click();
       await page.waitForTimeout(3000);
 
-      const name = await page.locator('h1').innerText().catch(() => null);
+      const name = await page.locator("h1").innerText().catch(() => null);
       const phone = await page.locator('button[data-item-id*="phone"]').innerText().catch(() => null);
-      const website = await page.locator('a[data-item-id="authority"]').getAttribute('href').catch(() => null);
+      const website = await page.locator('a[data-item-id="authority"]').getAttribute("href").catch(() => null);
       const address = await page.locator('button[data-item-id*="address"]').innerText().catch(() => null);
 
       if (!website) {
