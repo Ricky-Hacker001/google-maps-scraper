@@ -6,15 +6,15 @@ app.use(express.json());
 
 app.post("/scrape", async (req, res) => {
   const { query } = req.body;
-  if (!query) return res.status(400).json({ error: "Query required" });
+  if (!query) return res.status(400).json({ error: "Query is required" });
 
   try {
     const data = await scrapeMaps(query);
     res.json({ success: true, data });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log("Scraper running"));
+app.listen(PORT, () => console.log(`Scraper running on port ${PORT}`));
